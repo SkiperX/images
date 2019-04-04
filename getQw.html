@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+            body {
+                white-space: pre;
+            }
+        </style>
+</head>
+<script>
+        var params = window
+    .location
+    .search
+    .replace('?','')
+    .split('&')
+    .reduce(
+        function(p,e){
+            var a = e.split('=');
+            p[ decodeURIComponent(a[0])] = decodeURIComponent(a[1]);
+            return p;
+        },
+        {}
+    );
+
+
+
+function makerez(n) {
+    function data() {
+        return [{
+        id: 123,
+        housing: 1,
+        floor: 4,
+        rooms: 1,
+        area: 119,
+        price: '13 456 864',
+        code: '3_1_6',
+        imgSrc: 'http://placehold.it/100X100.jpg',
+        name: 'Квартира 1+'
+    },
+    {
+        id: 123,
+        housing: 2,
+        floor: 4,
+        rooms: 3,
+        area: 119,
+        price: '13 456 864',
+        code: '9_8_6',
+        imgSrc: 'http://placehold.it/100X100.jpg',
+        name: 'Квартира 1+'
+    },
+    ]
+    }
+    
+
+    n = n/data().length
+
+    var rez = [];
+    
+    for (i=0; i<=n; i++) {
+        for (e=0; e<data().length; e++) {
+        rez.push(data()[e])
+        }       
+    }
+
+      
+    rez = rez.map(function(obj, i) {
+        obj['id'] = parseFloat(params['rez'].split('-')[0]) + i
+        
+        return obj
+    })
+    rez = rez.slice(0, parseFloat(params['rez'].split('-')[1]) - parseFloat(params['rez'].split('-')[0]) +1)
+    return rez
+}
+
+
+var data = {
+    results: 58,
+    items: makerez(parseFloat(params['rez'].split('-')[1]) - parseFloat(params['rez'].split('-')[0]))
+}
+
+
+
+document.write(JSON.stringify(data, '', 4))
+
+    </script>
+<body>
+        
+   
+   
+    
+        
+    
+</body>
+</html>
